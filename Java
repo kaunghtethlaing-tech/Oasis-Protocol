@@ -1,0 +1,113 @@
+// 🌴 OASIS PROTOCOL - Interactive Platform
+console.log("🌴 Oasis Protocol Loading...");
+
+const vaults = [
+    {
+        id: 1,
+        name: "SOL Swing Master",
+        guide: "CryptoMaster",
+        aiScore: 94,
+        followers: 156,
+        tvl: 234.7,
+        winRate: 87.3,
+        fee: 15,
+        profit24h: 12.4
+    },
+    {
+        id: 2,
+        name: "DeFi Yield Pro",
+        guide: "DeFiExpert", 
+        aiScore: 89,
+        followers: 203,
+        tvl: 445.2,
+        winRate: 82.1,
+        fee: 12,
+        profit24h: 18.7
+    },
+    {
+        id: 3,
+        name: "Bitcoin DCA Strategy",
+        guide: "BTCTrader",
+        aiScore: 76,
+        followers: 89,
+        tvl: 156.3,
+        winRate: 74.5,
+        fee: 8,
+        profit24h: 5.2
+    }
+];
+
+function createVaultCard(vault) {
+    return `
+        <div class="vault-card">
+            <div class="vault-header">
+                <div class="vault-name">${vault.name}</div>
+                <div class="ai-score">🤖 ${vault.aiScore}/100</div>
+            </div>
+            <div class="guide-name">👨‍🏫 Guide: ${vault.guide}</div>
+            
+            <div class="vault-stats">
+                <div class="vault-stat">
+                    <span class="vault-stat-number">${vault.followers}</span>
+                    <span class="vault-stat-label">Followers</span>
+                </div>
+                <div class="vault-stat">
+                    <span class="vault-stat-number">$${vault.tvl}K</span>
+                    <span class="vault-stat-label">TVL</span>
+                </div>
+                <div class="vault-stat">
+                    <span class="vault-stat-number">${vault.winRate}%</span>
+                    <span class="vault-stat-label">Win Rate</span>
+                </div>
+                <div class="vault-stat">
+                    <span class="vault-stat-number">${vault.fee}%</span>
+                    <span class="vault-stat-label">Fee</span>
+                </div>
+            </div>
+            
+            <div style="background: linear-gradient(45deg, #4CAF50, #45a049); color: white; padding: 12px; border-radius: 10px; text-align: center; margin: 15px 0; font-weight: bold;">
+                📈 24h Profit: +$${vault.profit24h}K
+            </div>
+            
+            <button class="join-btn" onclick="joinVault(${vault.id})">
+                🚀 Join This Vault
+            </button>
+        </div>
+    `;
+}
+
+function joinVault(vaultId) {
+    const vault = vaults.find(v => v.id === vaultId);
+    const button = event.target;
+    
+    button.innerHTML = '⏳ Joining...';
+    button.disabled = true;
+    
+    setTimeout(() => {
+        alert(`🎉 SUCCESS! Welcome to ${vault.name}!\n\n` +
+              `✅ You've joined ${vault.guide}'s strategy\n` +
+              `🤖 AI Score: ${vault.aiScore}/100\n` +
+              `💰 Performance Fee: ${vault.fee}%\n` +
+              `📈 Win Rate: ${vault.winRate}%\n\n` +
+              `Your trades will now automatically copy ${vault.guide}!\n\n` +
+              `🌴 "Grow Together, Rich Together!" 🚀`);
+        
+        button.innerHTML = '✅ Joined Successfully!';
+        button.style.background = '#4CAF50';
+        
+        vault.followers += 1;
+        renderVaults();
+    }, 2000);
+}
+
+function renderVaults() {
+    document.getElementById('vaults-container').innerHTML = 
+        vaults.map(vault => createVaultCard(vault)).join('');
+}
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    renderVaults();
+    console.log("🌴 Oasis Protocol Ready!");
+    console.log("🚀 Try clicking 'Join Vault' buttons!");
+});
